@@ -1,5 +1,3 @@
-// pageObjects/registroPage.js
-
 class RegistroPage{
     visit(url){
         cy.visit(url)
