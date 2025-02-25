@@ -36,18 +36,18 @@ jobs:
         if: always()
         run: |
           echo "Resultado del job: ${{ job.status }}" > log.txt
-          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}" >> log.txt
+          echo "Resultado del paso de pruebas: success" >> log.txt
                
-      - name: Enviar correo si las pruebas fallan
-        if: failure()
+      - name: Enviar correo con el log
+        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Resultado del Job: ${{ job.status }}"
-          body: "El estado final del job es: ${{ job.status }}\nResultado de las pruebas: ${{ steps.ejecutar_pruebas.outcome }}"
+          subject: "Resultado del workflow: ${{ job.status }}"
+          body: "El resultado del workflow fue: ${{ job.status }}. Revisa el archivo adjunto para más detalles."
           to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions 
           attachments: log.txt
