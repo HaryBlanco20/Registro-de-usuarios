@@ -38,6 +38,9 @@ jobs:
         run: |
           echo "## 🌟 [Ver el run completo](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
 
+      - name: Añadir enlace como output del job
+        run: echo "run_url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+
       - name: Guardar el log como archivo
         if: always()
         run: |
