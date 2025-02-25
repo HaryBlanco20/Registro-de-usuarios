@@ -27,7 +27,17 @@ jobs:
       
       - name: Esperar a que el servidor esté listo
         run: sleep 5
+        
+      - name: Ejecutar pruebas
+        run: npm run test | tee resultado_tests.log
 
+      - name: Guardar el log como artefacto
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: log-de-pruebas
+          path: resultado_tests.log
+          
       - name: Mostrar info del entorno
         run: |
           node -v
@@ -38,10 +48,8 @@ jobs:
         run: npm ls
       - name: Run tests
         run: npm run test
-      
-      
 
-      - name: Send email if tests fail
+      - name: Enviar correo si las pruebas fallan
         if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
@@ -52,4 +60,7 @@ jobs:
           subject: 🚨 Fallo en las pruebas automatizadas
           to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions
-          body: Las pruebas automatizadas han fallado. Revisa el log para más detalles.
+          body: |
+            Las pruebas automatizadas han fallado. Aquí tienes el log adjunto:
+            
+            $(cat resultado_tests.log)
