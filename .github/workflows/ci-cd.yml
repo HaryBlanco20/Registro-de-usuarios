@@ -42,7 +42,7 @@ jobs:
           node -v
           npm -v
           uname -a
-          
+        
       - name: Enviar correo si las pruebas fallan
         if: failure()
         uses: dawidd6/action-send-mail@v3
@@ -57,4 +57,10 @@ jobs:
           body: |
             El estado final de las pruebas automatizadas fue: ${{ job.status }}.
             Aquí tienes el log adjunto.
+            
           attachments: resultado_tests.log
+          
+      - name: Depurar problemas de correo
+        if: failure()
+        run: echo "Error al enviar el correo. Verifica las credenciales y la configuración de Gmail."
+        
