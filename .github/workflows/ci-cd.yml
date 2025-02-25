@@ -31,12 +31,11 @@ jobs:
         id: ejecutar_pruebas
         run: npm run test | tee resultado_tests.log
 
-      - name: Guardar el log como artefacto
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: log-de-pruebas
-          path: resultado_tests.log
+      - name: Guardar el log como archivo
+        if: always()
+        run: |
+          echo "Resultado del job: ${{ job.status }}" > log.txt
+          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}" >> log.txt
                
       - name: Enviar correo si las pruebas fallan
         if: failure()
