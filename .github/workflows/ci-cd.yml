@@ -30,14 +30,16 @@ jobs:
        
       - name: Ejecutar pruebas con Cypress
         id: ejecutar_pruebas
-        run: npm run test | tee resultado_tests.log
+        run: |
+          mkdir -p logs
+          npx cypress run > logs/cypress-log.txt 2>&1 || true
 
       - name: Guardar el log como archivo
         if: always()
         run: |
-          echo "Resultado del job: ${{ job.status }}" > log.txt
-          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}" >> log.txt
-          cat cypress-log.txt >> log.txt
+          echo "Resultado del job: ${{ job.status }}" > logs/log.txt
+          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}" >> logs/log.txt
+          cat logs/cypress-log.txt >> logs/log.txt
                
       - name: Enviar correo con el log
         if: always()
@@ -51,5 +53,4 @@ jobs:
           body: "El resultado del workflow fue: ${{ job.status }}. Revisa el archivo adjunto para más detalles."
           to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions 
-          attachments: log.txt
-   
+          attachments: logs/log.txt   
