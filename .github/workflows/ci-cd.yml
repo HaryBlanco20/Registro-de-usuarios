@@ -36,7 +36,8 @@ jobs:
         if: always()
         run: |
           echo "Resultado del job: ${{ job.status }}" > log.txt
-          echo "Resultado del paso de pruebas: success" >> log.txt
+          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}" >> log.txt
+          cat cypress-log.txt >> log.txt
                
       - name: Enviar correo con el log
         if: always()
@@ -51,10 +52,4 @@ jobs:
           to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions 
           attachments: log.txt
-          
-      - name: Verificar envío de correo
-        if: always()
-        run: |
-          echo "Intentando enviar correo."
-          echo "Estado del job: ${{ job.status }}"
-          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}"
+   
