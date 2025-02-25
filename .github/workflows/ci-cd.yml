@@ -25,3 +25,31 @@ jobs:
 
       - name: Ejecutar pruebas Cypress
         run: npx cypress run
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test
+
+    # Configuración de notificaciones por email
+    if: failure()
+    steps:
+      - name: Send email on failure
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🔴 CI/CD Failed: Registro de Usuarios"
+          to: "ariadne.blanco.qa@gmail.com"
+          from: "GitHub Actions"
+          body: "Las pruebas automatizadas han fallado. Revisa el log aquí: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
