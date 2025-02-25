@@ -18,9 +18,28 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      - name: Configurar puerto
+        run: export PORT=5501
 
+      - name: Iniciar servidor
+        run: npm start &
+      
+      - name: Esperar a que el servidor esté listo
+        run: sleep 5
+
+      - name: Mostrar info del entorno
+        run: |
+          node -v
+          npm -v
+          uname -a
+          
+      - name: Verificar dependencias
+        run: npm ls
       - name: Run tests
         run: npm run test
+      
+      
 
       - name: Send email if tests fail
         if: failure()
