@@ -24,9 +24,9 @@ jobs:
         env:
           CI: true
       
-      - name: Esperar a que el servidor esté listo
-        run: sleep 5
-        
+      - name: Esperar que el servidor esté listo
+        run: npx wait-on http://127.0.0.1:5501/formulario_registro/index.html
+       
       - name: Ejecutar pruebas con Cypress
         run: npm run test | tee resultado_tests.log
 
