@@ -4,7 +4,7 @@ import RegistroPage from "../pageObjects/RegistroPage"; // Importamos el Page Ob
 Given("el usuario se encuentra en la página de registro {string}", (url) => {
   RegistroPage.visit(url)
 })
-
+//prueba
 When("el usuario ingresa {string} en el campo {string}", (inputValue, fieldName) => {
   if(fieldName === "Email"){
     RegistroPage.fillEmail(inputValue)
@@ -32,7 +32,7 @@ When("el usuario no ingresa nada en el campo {string}", (fieldName)=>{
     RegistroPage.clearPassword()
   }
 })
-//Pausa después de cada escenario
+//Pausa después de cada escenario 
 afterEach(() => {
   cy.wait(1200)
 })
