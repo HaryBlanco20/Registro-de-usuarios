@@ -32,7 +32,7 @@ jobs:
 
       - name: Guardar el log como artefacto
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: log-de-pruebas
           path: resultado_tests.log
