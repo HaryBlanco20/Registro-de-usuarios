@@ -37,13 +37,7 @@ jobs:
         with:
           name: log-de-pruebas
           path: resultado_tests.log
-          
-      - name: Mostrar info del entorno
-        run: |
-          node -v
-          npm -v
-          uname -a
-        
+               
       - name: Enviar correo si las pruebas fallan
         if: failure()
         uses: dawidd6/action-send-mail@v3
@@ -56,7 +50,8 @@ jobs:
           body: "El estado final del job es: ${{ job.status }}\nResultado de las pruebas: ${{ steps.ejecutar_pruebas.outcome }}"
           to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions 
-                    
+          attachments: log.txt
+          
       - name: Verificar envío de correo
         if: always()
         run: |
