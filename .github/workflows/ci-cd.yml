@@ -33,7 +33,11 @@ jobs:
         run: |
           mkdir -p logs
           npx cypress run --headless --browser chrome > logs/cypress-log.txt 2>&1 || true
-
+          
+      - name: Add workflow run link as a button
+        run: |
+          echo "## 🌟 [Ver el run completo](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+        
       - name: Guardar el log como archivo
         if: always()
         run: |
