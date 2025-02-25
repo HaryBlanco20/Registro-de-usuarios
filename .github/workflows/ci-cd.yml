@@ -51,9 +51,10 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: 🚨 Fallo en las pruebas automatizadas
+          subject: ${{ job.status }} - Resultado de las pruebas automatizadas 🚀
           to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions 
           body: |
-            Las pruebas automatizadas han fallado. Revisa el archivo adjunto con los detalles del log.
+            El estado final de las pruebas automatizadas fue: ${{ job.status }}.
+            Aquí tienes el log adjunto.
           attachments: resultado_tests.log
