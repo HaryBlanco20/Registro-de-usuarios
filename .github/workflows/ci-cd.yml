@@ -28,6 +28,7 @@ jobs:
         run: npx wait-on http://127.0.0.1:5501/formulario_registro/index.html
        
       - name: Ejecutar pruebas con Cypress
+        id: ejecutar_pruebas
         run: npm run test | tee resultado_tests.log
 
       - name: Guardar el log como artefacto
@@ -62,5 +63,7 @@ jobs:
           
       - name: Verificar envío de correo
         if: always()
-        run: echo "Intentando enviar correo. Estado del job: ${{ job.status }}"
-        
+        run: |
+          echo "Intentando enviar correo."
+          echo "Estado del job: ${{ job.status }}"
+          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}"
