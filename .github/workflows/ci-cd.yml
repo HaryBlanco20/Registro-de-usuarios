@@ -37,12 +37,10 @@ jobs:
       - name: Add workflow run link as a button
         run: |
           echo "## 🌟 [Ver el run completo](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
-        
+
       - name: Guardar el log como archivo
         if: always()
         run: |
-          echo "Resultado del job: ${{ job.status }}" > logs/log.txt
-          echo "Resultado del paso de pruebas: ${{ steps.ejecutar_pruebas.outcome }}" >> logs/log.txt
           cat logs/cypress-log.txt | sed 's/\x1B\[[0-9;]*[a-zA-Z]//g' >> logs/log.txt
                
       - name: Enviar correo con el log
