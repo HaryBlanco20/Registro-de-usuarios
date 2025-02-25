@@ -51,16 +51,16 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: ${{ job.status }} - Resultado de las pruebas automatizadas 🚀
+          subject: "Resultado de las pruebas automatizadas: ${{ job.status }}"
           to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions 
           body: |
-            El estado final de las pruebas automatizadas fue: ${{ job.status }}.
-            Aquí tienes el log adjunto.
-            
+            ✅ Estado de las pruebas: ${{ job.status }}
+
+            Revisa el archivo adjunto para más detalles.
           attachments: resultado_tests.log
           
-      - name: Depurar problemas de correo
-        if: failure()
-        run: echo "Error al enviar el correo. Verifica las credenciales y la configuración de Gmail."
+      - name: Verificar envío de correo
+        if: always()
+        run: echo "Intentando enviar correo. Estado del job: ${{ job.status }}"
         
