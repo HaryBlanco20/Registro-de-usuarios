@@ -31,6 +31,6 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 🚨 Fallo en las pruebas automatizadas
-          to: ariadne.blanco.qa@gmailcom
+          to: ariadne.blanco.qa@gmail.com
           from: GitHub Actions
           body: Las pruebas automatizadas han fallado. Revisa el log para más detalles.
