@@ -32,7 +32,7 @@ jobs:
         id: ejecutar_pruebas
         run: |
           mkdir -p logs
-          npx cypress run --no-color > logs/cypress-log.txt 2>&1 || true
+          FORCE_COLOR=0 npx cypress run > logs/cypress-log.txt 2>&1 || true
 
       - name: Guardar el log como archivo
         if: always()
